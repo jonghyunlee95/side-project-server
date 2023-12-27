@@ -30,6 +30,14 @@ app.post('/db', function (req, res) {
 
   res.send('값 추가 성공');
 });
+// 수정
+app.put('/db', function (req, res) {
+  const id = req.body.id;
+  const title = req.body.title;
+
+  db[id - 1].title = title;
+  res.send('값 수정 성공');
+});
 
 app.listen(3000, () => {
   console.log('on');
