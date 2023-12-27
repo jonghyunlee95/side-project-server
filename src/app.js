@@ -20,6 +20,16 @@ app.get('/db/:id', function (req, res) {
   const data = db.find((el) => el.id === Number(id));
   res.send(data);
 });
+// 생성
+app.post('/db', function (req, res) {
+  const title = req.body.title;
+  db.push({
+    id: db.length + 1,
+    title,
+  });
+
+  res.send('값 추가 성공');
+});
 
 app.listen(3000, () => {
   console.log('on');
