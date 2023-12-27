@@ -38,6 +38,13 @@ app.put('/db', function (req, res) {
   db[id - 1].title = title;
   res.send('값 수정 성공');
 });
+// 삭제
+app.delete('/db', function (req, res) {
+  const id = req.body.id;
+
+  db.splice(id - 1, 1);
+  res.send('값 삭제 성공');
+});
 
 app.listen(3000, () => {
   console.log('on');
