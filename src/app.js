@@ -14,6 +14,12 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/db', function (req, res) {
   res.send(db);
 });
+// 특정 글 조회
+app.get('/db/:id', function (req, res) {
+  const id = req.params.id;
+  const data = db.find((el) => el.id === Number(id));
+  res.send(data);
+});
 
 app.listen(3000, () => {
   console.log('on');
