@@ -1,6 +1,21 @@
 const express = require('express');
 const app = express();
 
+const mongoose = require('mongoose');
+
+mongoose
+  .connect(
+    'mongodb+srv://admin:jonghyun95@hyunapi.9rpvhs3.mongodb.net/?retryWrites=true&w=majority'
+  )
+  .then(() => {
+    app.listen(3000, () => {
+      console.log('on');
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 const db = [
   { id: 1, title: '글 1' },
   { id: 2, title: '글 2' },
@@ -44,8 +59,4 @@ app.delete('/db', function (req, res) {
 
   db.splice(id - 1, 1);
   res.send('값 삭제 성공');
-});
-
-app.listen(3000, () => {
-  console.log('on');
 });
