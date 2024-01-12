@@ -1,3 +1,5 @@
+const Post = require('./models/post');
+
 const express = require('express');
 const app = express();
 
@@ -16,19 +18,19 @@ mongoose
     console.log(err);
   });
 
-const db = [
-  { id: 1, title: '글 1' },
-  { id: 2, title: '글 2' },
-  { id: 3, title: '글 3' },
-];
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 글 목록 전체 조회
-app.get('/db', function (req, res) {
-  res.send(db);
+app.get('/posts', async (req, res) => {
+  try {
+    const posts = await Post.find({});
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
+
 // 특정 글 조회
 app.get('/db/:id', function (req, res) {
   const id = req.params.id;
