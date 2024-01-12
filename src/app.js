@@ -43,15 +43,15 @@ app.get('/posts/:id', async (req, res) => {
 });
 
 // 생성
-app.post('/db', function (req, res) {
-  const title = req.body.title;
-  db.push({
-    id: db.length + 1,
-    title,
-  });
-
-  res.send('값 추가 성공');
+app.post('/posts', async (req, res) => {
+  try {
+    const post = await Post.create(req.body);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
+
 // 수정
 app.put('/db', function (req, res) {
   const id = req.body.id;
