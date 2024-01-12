@@ -32,11 +32,16 @@ app.get('/posts', async (req, res) => {
 });
 
 // 특정 글 조회
-app.get('/db/:id', function (req, res) {
-  const id = req.params.id;
-  const data = db.find((el) => el.id === Number(id));
-  res.send(data);
+app.get('/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
+
 // 생성
 app.post('/db', function (req, res) {
   const title = req.body.title;
