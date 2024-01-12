@@ -53,13 +53,20 @@ app.post('/posts', async (req, res) => {
 });
 
 // 수정
-app.put('/db', function (req, res) {
-  const id = req.body.id;
-  const title = req.body.title;
+app.put('/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findByIdAndUpdate(id, req.body);
 
-  db[id - 1].title = title;
-  res.send('값 수정 성공');
+    if (!post) return res.status(404).json({ message: `cannot find ${id}` });
+
+    const updatedPost = await Post.findById(id);
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
+
 // 삭제
 app.delete('/db', function (req, res) {
   const id = req.body.id;
