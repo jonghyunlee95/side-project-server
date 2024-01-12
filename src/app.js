@@ -68,9 +68,15 @@ app.put('/posts/:id', async (req, res) => {
 });
 
 // 삭제
-app.delete('/db', function (req, res) {
-  const id = req.body.id;
+app.delete('/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findByIdAndDelete(id);
 
-  db.splice(id - 1, 1);
-  res.send('값 삭제 성공');
+    if (!post) return res.status(404).json({ message: `cannot find ${id}` });
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
