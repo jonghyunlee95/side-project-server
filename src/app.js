@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Post = require('./models/post');
 
 const express = require('express');
@@ -6,9 +8,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 mongoose
-  .connect(
-    'mongodb+srv://admin:jonghyun95@hyunapi.9rpvhs3.mongodb.net/?retryWrites=true&w=majority'
-  )
+  .connect(process.env.DB_URL)
   .then(() => {
     app.listen(3000, () => {
       console.log('on');
