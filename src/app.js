@@ -7,11 +7,19 @@ const app = express();
 
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  })
+);
+
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
     app.listen(3000, () => {
-      console.log('on');
+      console.log('server on');
     });
   })
   .catch((err) => {
